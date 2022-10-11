@@ -3,11 +3,11 @@ package com.api.testapi.controllers;
 import com.api.testapi.models.Blog;
 import com.api.testapi.repositories.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -16,18 +16,20 @@ public class BlogController {
     BlogRepository blogRepository;
 
     @PostMapping("blogs/store")
-    public Blog store(Blog blog){
-        return (Blog) blogRepository.save(blog);
+    public ResponseEntity<Blog> store(@RequestBody @Valid Blog blog){
+        blogRepository.save(blog);
+        return new ResponseEntity<Blog>(blog, HttpStatus.OK);
     }
 
     @GetMapping("blogs/get/{id}")
-    public Optional<Blog> find(@PathVariable(value="id") Long id){
-        return blogRepository.findById(id);
+    public ResponseEntity<Blog> find(@PathVariable(value="id") Long id){
+        Optional<Blog> blog =  blogRepository.findById(id);
+        return new ResponseEntity<Blog>(blog.get(), HttpStatus.OK);
     }
 
     @PostMapping("blogs/update/{id}")
-    public Blog find(@PathVariable(value="id") Long id, Blog blog){
+    public ResponseEntity<Blog> find(@PathVariable(value="id") Long id,@RequestBody @Valid  Blog blog){
         blog.setId(id);
-        return (Blog) blogRepository.save(blog);
+        return new ResponseEntity<Blog>(blog, HttpStatus.OK);
     }
 }
