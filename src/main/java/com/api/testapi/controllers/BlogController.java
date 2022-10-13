@@ -32,4 +32,11 @@ public class BlogController {
         blog.setId(id);
         return new ResponseEntity<Blog>(blog, HttpStatus.OK);
     }
+
+    @DeleteMapping("blogs/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable(value="id") Long id){
+        Optional<Blog> blog = blogRepository.findById(id);
+        blogRepository.delete(blog.get());
+        return new ResponseEntity<String>("Deleted successfully", HttpStatus.OK);
+    }
 }

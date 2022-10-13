@@ -37,7 +37,6 @@ public class Blog {
     private String content;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "blog")
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
     private List<Image> images;
-
 }
