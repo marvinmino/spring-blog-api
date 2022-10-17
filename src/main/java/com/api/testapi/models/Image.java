@@ -1,6 +1,7 @@
 package com.api.testapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class Image {
     @Column(name = "type")
     private String type;
 
+    @JsonIgnore
     @Column(name = "image", unique = false, nullable = false, length = 100000)
     private byte[] image;
 }

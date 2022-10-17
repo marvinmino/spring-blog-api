@@ -36,7 +36,6 @@ public class Blog {
     @NotBlank(message = "Content is mandatory")
     private String content;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
     private List<Image> images;
 }

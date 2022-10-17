@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +26,12 @@ public class BlogController {
     public ResponseEntity<Blog> find(@PathVariable(value="id") Long id){
         Optional<Blog> blog =  blogRepository.findById(id);
         return new ResponseEntity<Blog>(blog.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("blogs/get")
+    public ResponseEntity<List<Blog>> get(){
+        List<Blog> blogs =  blogRepository.findAll();
+        return new ResponseEntity<List<Blog>>(blogs, HttpStatus.OK);
     }
 
     @PostMapping("blogs/update/{id}")
